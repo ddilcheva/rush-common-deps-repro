@@ -27,12 +27,17 @@ module.exports = {
  * The return value is the updated object.
  */
 function readPackage(packageJson, context) {
+  const cjsVersion = "3.6.5"
 
   // // The karma types have a missing dependency on typings from the log4js package.
   // if (packageJson.name === '@types/karma') {
   //  context.log('Fixed up dependencies for @types/karma');
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
+  if (!!packageJson.dependencies["core-js"]) {
+   context.log(`[pnpmfile] ${packageJson.name} core-js version updated ${packageJson.dependencies["core-js"]} -> ${cjsVersion}`);
+   packageJson.dependencies["core-js"]= cjsVersion;
+  }
 
   return packageJson;
 }
