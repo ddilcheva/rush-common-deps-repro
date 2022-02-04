@@ -7,7 +7,7 @@ pnpm version pnpm-6.7.1
 ## Issue
 Preferred version is not respected. 
 When a package specifies a range, 
-the highest version is installed instead of the preferred version 
+the latest version is installed instead of the preferred version 
 (which is lower but within the range).
 
 ## Expected behavior
@@ -93,3 +93,68 @@ Works correctly and I get in pnpm-lock.json
 ```
 
 However, if I then modify the version in preferredVersions and `npm update`, the installed dependency does not change
+
+## Github Issue
+
+
+## Summary
+
+Preferred version is not respected. 
+When a package specifies a range, 
+the latest version is installed instead of the preferred version 
+(which is lower but within the range).
+
+Example from the repro repo:
+Project "a" depends on `core-js@^3.0.0`
+preferredVersion in common-versions.json is `"core-js": "3.6.5"`
+installed version is `core-js: 3.21.0`
+
+## Repro steps
+
+clone https://github.com/ddilcheva/rush-common-deps-repro
+```
+rush install
+> succeeds
+
+rush check
+
+> logs:
+Node.js version is 14.18.2 (LTS)
+
+
+Starting "rush check"
+
+core-js
+  ^3.0.0
+   - a
+  3.6.5
+   - preferred versions from common-versions.json
+
+Found 1 mis-matching dependencies!
+
+rush update
+> no updates 
+```
+
+  **Expected result:** `rush update` pins core-js@3.6.5 in common/rush/config/pnpm-lock.yaml
+
+  **Actual result:** `core-js: 3.21.0` is installed
+
+## Details
+
+Specifying preferredVersion *first*, 
+then adding dependency to the package (`rush add -p core-js@^3.0.0`)
+works correctly and installs v3.6.5
+
+## Standard questions
+
+Please answer these questions to help us investigate your issue more quickly:
+
+| Question | Answer |
+| -------- | -------- |
+| `@microsoft/rush` globally installed version? | 5.61.4 |
+| `rushVersion` from rush.json? | 5.61.4 |
+| `useWorkspaces` from rush.json? | no |
+| Operating system? | Mac |
+| Would you consider contributing a PR? | No|
+| Node.js version (`node -v`)? | v14.18.2 |

@@ -1,17 +1,14 @@
 lockfileVersion: 5.3
 
-importers:
+specifiers:
+  '@rush-temp/a': file:./projects/a.tgz
+  core-js: ^3.0.0
+  object.pick: ^1.3.0
 
-  .:
-    specifiers: {}
-
-  ../../a:
-    specifiers:
-      core-js: ^3.0.0
-      object.pick: ^1.3.0
-    dependencies:
-      core-js: 3.21.0
-      object.pick: 1.3.0
+dependencies:
+  '@rush-temp/a': file:projects/a.tgz
+  core-js: 3.21.0
+  object.pick: 1.3.0
 
 packages:
 
@@ -30,4 +27,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       isobject: 3.0.1
+    dev: false
+
+  file:projects/a.tgz:
+    resolution: {integrity: sha512-lfqQ+ooWR4qjEx7oIUhDqEYz/TrcZP8x1glLVTYzv4BHczR00W4cUOPSwMnARcuRUMmOFwuahU3RWghE10xJmg==, tarball: file:projects/a.tgz}
+    name: '@rush-temp/a'
+    version: 0.0.0
+    dependencies:
+      core-js: 3.21.0
+      object.pick: 1.3.0
     dev: false
